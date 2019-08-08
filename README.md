@@ -19,6 +19,12 @@ With a single annotation `@RepositoryRestResource` your model class is exposed a
 ## JPA
 Use the `@Entity` annotation on model class.
 
+The `@GeneratedValue` annotation on the primary key means that the default `GenerationType.AUTO` strategy is used, which
+lets the persistence provider choose the generation strategy. Hibernate (the default JPA persistence provider for Spring Boot) selects a generation strategy based on the database
+specific dialect. For most popular databases, including H2, it selects `GenerationType.SEQUENCE`. The article 
+["How to generate primary keys with JPA and Hibernate"](https://thoughts-on-java.org/jpa-generate-primary-keys/)
+explains alternatives to this default behavior.
+
 Provide a `@RepositoryRestResource` repository interface.
 
 ## H2
