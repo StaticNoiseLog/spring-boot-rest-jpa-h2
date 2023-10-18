@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../static/favicon.png">
+    <title>Cats</title>
+    <!--    <link rel="stylesheet" href="style.css">-->
+
+    <script>
+        async function fetchCats() {
+            try {
+                const response = await fetch('/cats', {
+                    method: 'GET',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    // body: {
+                    //     name: 'hacked'
+                    // }
+                })
+                const objectFromJson = await response.json()
+                const cats = objectFromJson._embedded.cats
+                const extractName = cat => cat.name
+                console.log('cat names: ', cats.map(extractName))
+                const log = document.getElementById('log')
+                for (const cat of cats) {
+                    log.textContent += '\n' + cat.name
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        }
+    </script>
+</head>
+
+<body>
+<img src="hotcat.jpg" alt="hot cat" onClick="fetchCats()">
+<pre id="log">Logging...
+with
+new
+lines</pre>
+<button class="btn btn--form">XHR Cat</button>
+<input type="text" placeholder="New Cat" name="xhr-cat" required>
+<form action="" class="cta-form" action="#">
+    <div>
+        <label for="full-name">Full Name</label>
+        <input type="text" placeholder="Jo Doe" name="" id="full-name" required>
+    </div>
+    <button class="btn btn--form">Sign up now</button>
+</form>
+
+<!-- <form action="https://dev-invoice-collector-service.scapp.swisscom.com/v1/tenants" method="POST" name="f"
+  style="display: none;">
+  <input type="text" name="name" value="hacked" />
+</form> -->
+
+</body>
+
+</html>
